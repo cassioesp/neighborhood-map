@@ -22,6 +22,9 @@ class GoogleMapsContainer extends React.Component {
         this.onMarkerClick = this.onMarkerClick.bind(this);
     }
 
+    /**
+     * Handles a click on a marker.
+     */
     onMarkerClick = (props, marker, e) => {
         this.setState({
             selectedPlace: props,
@@ -46,6 +49,9 @@ class GoogleMapsContainer extends React.Component {
             });
     };
 
+    /**
+     * Deselect any selected marker.
+     */
     onMapClick = () => {
         if (this.state.showingInfoWindow) {
             this.setState({
@@ -63,6 +69,7 @@ class GoogleMapsContainer extends React.Component {
 
         return (
             <div
+                className='map-container'
                 style={{marginLeft: '250px'}}>
                 <Map
                     item
@@ -71,8 +78,7 @@ class GoogleMapsContainer extends React.Component {
                     google={this.props.google}
                     onClick={this.onMapClick}
                     zoom={12}
-                    initialCenter={{lat: -7.119722, lng: -34.849280}}
-                >
+                    initialCenter={{lat: -7.119722, lng: -34.849280}}>
                     {this.props.places.map((place, i) => {
                         return <Marker
                             key={place.id}
@@ -113,6 +119,7 @@ class GoogleMapsContainer extends React.Component {
                                     <h3>{this.state.foursquarePlaceInfo.categories[0].name}</h3>
                                 )}
                             </div>
+                            <footer>Data from Foursquare</footer>
                         </div>
                     </InfoWindow>
                     }

@@ -34,12 +34,21 @@ class List extends Component {
                 "name": "Estação de Ciência e Artes",
                 "lat": "-7.149027",
                 "lng": "-34.797814"
+            },
+            {
+                "id": "4ce180e4f8a4a143db04ebbc",
+                "name": "Usina Cultural da Energisa",
+                "lat": "-7.1194918",
+                "lng": "-34.8701119"
             }
         ],
         query: ''
     };
 
-
+    /**
+     * Filter places list based on query.
+     * @param query
+     */
     updateQuery(query) {
         this.setState({query}, () => {
             const filtered = this.getFilteredPlaces();
@@ -58,12 +67,22 @@ class List extends Component {
         return this.state.places.filter(p => match.test(p.name));
     }
 
-    render() {
+    /**
+     * Show/Hide list of places.
+     */
+    handleMenuClick() {
+        const map = document.querySelector('.map-container');
+        map.style.marginLeft = map.style.marginLeft === '250px' ? '0' : '250px';
 
+        const sandwich = document.querySelector('.sandwich');
+        sandwich.style.left = sandwich.style.left === '250px' ? '0' : '250px';
+    }
+
+    render() {
         return (
             <div>
-                <div className='sidebar'>
-                    <div className='heading' role='heading'>
+                <div id='sideBar' className='sidebar'>
+                    <div className='heading'>
                         <h1 className='title'>
                             Cassio's Places
                         </h1>
@@ -74,8 +93,8 @@ class List extends Component {
                             onChange={event => this.updateQuery(event.target.value)}
                             placeholder='Filter places'/>
                     </div>
-                    <div className='place-list' role='region'>
-                        <ol className='places-list'>
+                    <div className='place-list'>
+                        <ol>
                             {this.getFilteredPlaces().map((place) => (
                                 <li key={place.id} className='place-list-item'>
                                     <div className='place-details'>
@@ -86,7 +105,17 @@ class List extends Component {
                         </ol>
                     </div>
                 </div>
+                <div
+                    tabIndex='-1'
+                    style={{left: '250px'}}
+                    className='sandwich'
+                    onClick={this.handleMenuClick}>
+                    <img
+                        src='menu.png'
+                        alt='Show/Hide List'/>
+                </div>
             </div>
+
         );
     }
 }

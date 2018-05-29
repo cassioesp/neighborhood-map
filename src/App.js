@@ -35,6 +35,12 @@ class App extends Component {
                 "name": "Estação de Ciência e Artes",
                 "lat": "-7.149027",
                 "lng": "-34.797814"
+            },
+            {
+                "id": "4ce180e4f8a4a143db04ebbc",
+                "name": "Usina Cultural da Energisa",
+                "lat": "-7.1194918",
+                "lng": "-34.8701119"
             }
         ]
     };
