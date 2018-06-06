@@ -2,8 +2,37 @@ import React, {Component} from 'react';
 import './App.css';
 import GoogleMapsContainer from "./GoogleMapsContainer";
 import List from "./List";
+import {Marker} from "google-maps-react";
+
+var foursquare = require('react-foursquare')({
+    clientID: 'GE33NIJ2DMXDSLDYCJZ2DYQWAUJG3G3NCDAFXKNSCIMLCI1I',
+    clientSecret: 'SMRBE3PZ2Y4TQPUS44M24VYSQ2RZY24FJSYGISZYUVTV0MHP'
+});
+
 
 class App extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.onMarkerClick = this.onMarkerClick.bind(this);
+
+        this.state.places.map((place, i) => {
+            var marker = <Marker
+                key={place.id}
+                id={place.id}
+                title={place.name}
+                position={{lat: place.lat, lng: place.lng}}
+                name={place.name}
+                onClick={this.onMarkerClick.bind(this)}
+            >
+            </Marker>;
+            this.state.markers.push(marker);
+            return marker;
+        })
+    }
+
+
     state = {
         places: [
             {
@@ -42,12 +71,46 @@ class App extends Component {
                 "lat": "-7.1194918",
                 "lng": "-34.8701119"
             }
-        ]
+        ],
+        markers: [],
+        showingInfoWindow: false,
+        activeMarker: {},
     };
 
     handleSetMarkers = (places) => {
         this.setState({places});
     };
+
+    /**
+     * Handles a click on a marker.
+     */
+    onMarkerClick = (props) => {
+
+        for (let i = 0; i < this.state.markers.length; i++) {
+            if (this.state.markers[i].props.title === props.title) {
+                this.setState({
+                    activeMarker: this.state.markers[i],
+                    showingInfoWindow: true
+                })
+            }
+        }
+
+
+        /*
+
+        var params = {};
+
+        params.venue_id = props.id;
+        params.query = props.name;
+        params.ll = props.lat + ", " + props.lng;
+
+        foursquare.venues.getVenues(params)
+            .then(res => {
+                this.setState({foursquarePlaceInfo: res.response.venues[0]});
+            });
+        */
+    };
+
 
     render() {
         return (
@@ -56,6 +119,9 @@ class App extends Component {
                     setMarkers={this.handleSetMarkers}
                     places={this.state.places}/>
                 <GoogleMapsContainer
+                    showingInfoWindow={this.state.showingInfoWindow}
+                    activeMarker={this.state.activeMarker}
+                    markers={this.state.markers}
                     places={this.state.places}/>
             </div>
         );
