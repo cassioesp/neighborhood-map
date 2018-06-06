@@ -75,6 +75,7 @@ class App extends Component {
         markers: [],
         showingInfoWindow: false,
         activeMarker: {},
+        foursquarePlaceInfo: {}
     };
 
     handleSetMarkers = (places) => {
@@ -95,20 +96,18 @@ class App extends Component {
             }
         }
 
-
-        /*
-
         var params = {};
 
         params.venue_id = props.id;
         params.query = props.name;
-        params.ll = props.lat + ", " + props.lng;
+        params.ll = props.position.lat + ", " + props.position.lng;
 
         foursquare.venues.getVenues(params)
             .then(res => {
+                console.log(res);
                 this.setState({foursquarePlaceInfo: res.response.venues[0]});
             });
-        */
+
     };
 
 
@@ -120,6 +119,7 @@ class App extends Component {
                     places={this.state.places}/>
                 <GoogleMapsContainer
                     showingInfoWindow={this.state.showingInfoWindow}
+                    foursquarePlaceInfo={this.state.foursquarePlaceInfo}
                     activeMarker={this.state.activeMarker}
                     markers={this.state.markers}
                     places={this.state.places}/>
