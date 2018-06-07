@@ -3,23 +3,6 @@ import {GoogleApiWrapper, InfoWindow, Map, Marker} from 'google-maps-react';
 
 
 class GoogleMapsContainer extends React.Component {
-    constructor(props) {
-        super(props);
-        this.onMapClick = this.onMapClick.bind(this);
-    }
-
-    /**
-     * Deselect any selected marker.
-     */
-    onMapClick = () => {
-        if (this.state.showingInfoWindow) {
-            this.setState({
-                showingInfoWindow: false,
-                activeMarker: null
-            })
-            ;
-        }
-    };
 
     render() {
         const style = {
@@ -35,7 +18,7 @@ class GoogleMapsContainer extends React.Component {
                     xs={12}
                     style={style}
                     google={this.props.google}
-                    onClick={this.onMapClick}
+                    onClick={this.props.onMapClick}
                     zoom={12}
                     initialCenter={{lat: -7.119722, lng: -34.849280}}>
                     {this.props.markers}

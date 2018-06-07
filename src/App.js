@@ -83,6 +83,19 @@ class App extends Component {
     };
 
     /**
+     * Deselect any selected marker.
+     */
+    onMapClick = () => {
+        if (this.state.showingInfoWindow) {
+            this.setState({
+                showingInfoWindow: false,
+                activeMarker: null
+            })
+            ;
+        }
+    };
+
+    /**
      * Handles a click on a marker.
      */
     onMarkerClick = (props) => {
@@ -120,6 +133,7 @@ class App extends Component {
                 <GoogleMapsContainer
                     showingInfoWindow={this.state.showingInfoWindow}
                     foursquarePlaceInfo={this.state.foursquarePlaceInfo}
+                    onMapClick={this.onMapClick}
                     activeMarker={this.state.activeMarker}
                     markers={this.state.markers}
                     places={this.state.places}/>
