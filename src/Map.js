@@ -30,14 +30,14 @@ const MapWithSearchBox = compose(
 
                     onBoundsChange: () => {
                         this.setState({
-                            bounds: ref.map.getBounds(),
+                            bounds: refs.map.getBounds(),
                             center: refs.map.getCenter()
                         })
                     },
 
                     onPlacesChanged: () => {
-                        const places = refs.searchBox.getPlaces()
-                        const bounds = new google.maps.LatLngBounds()
+                        const places = refs.searchBox.getPlaces();
+                        const bounds = new google.maps.LatLngBounds();
 
                         const nextPlaces = places.map(place => {
                             return {position: place.geometry.location}
@@ -67,8 +67,9 @@ const MapWithSearchBox = compose(
             ref={props.searchBoxMounted}
             controlPosition={google.maps.ControlPosition.TOP_LEFT}
             bounds={props.bounds}
-            onPlaceChanged={props.onPlacesChanged}>
-            <input placeholder='Digite seu endereço'
+            onPlacesChanged={props.onPlacesChanged}>
+            <input type="text"
+                   placeholder='Digite seu endereço'
                    style={{height: '80px'}}/>
         </SearchBox>
         <Marker
