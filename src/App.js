@@ -69,16 +69,28 @@ class App extends Component {
         return places.filter(p => match.test(p.name));
     }
 
+    onItemClick(id) {
+
+        console.log(id);
+
+    }
+
     render() {
         return (
             <div className="App">
                 <List
                     updateQuery={this.updateQuery.bind(this)}
                     getFilteredPlaces={this.getFilteredPlaces.bind(this)}
+                    onItemClick={this.onItemClick.bind(this)}
                     query={this.state.query}/>
                 <Map
+                    onMarkerClick={this.onItemClick.bind(this)}
                     getFilteredPlaces={this.getFilteredPlaces.bind(this)}
                 />
+                <InfoWindow
+                    place={this.state.selectedPlace}
+                    foursquare={FOURSQUARE}
+                    hideInfoWindow={this.handleHidingInfoWindow} />
             </div>
         );
     }

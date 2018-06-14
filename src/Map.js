@@ -3,14 +3,15 @@ import React, {Component} from 'react'
 import {GoogleMap, withGoogleMap, withScriptjs, Marker} from 'react-google-maps'
 
 const MapComponent = withScriptjs(withGoogleMap(props => {
-        console.log(props);
         return <GoogleMap
             defaultZoom={13}
             center={{lat: -7.12, lng: -34.84}}>
             {props.getFilteredPlaces.map((place, index) =>
                 <Marker
                     key={index}
+                    id={place.id}
                     position={{lat: place.lat, lng: place.lng}}
+                    onClick={() => props.onMarkerClick(place.id)}
                 />)
             }
         </GoogleMap>
@@ -30,6 +31,7 @@ class Map extends Component {
                 loadingElement={<div style={{height: `100%`}}/>}
                 containerElement={<div style={{height: `768px`}}/>}
                 mapElement={<div style={{height: `100%`}}/>}
+                onMarkerClick={(id) => this.props.onMarkerClick(id)}
                 getFilteredPlaces={this.props.getFilteredPlaces()}
             />
         </div>;

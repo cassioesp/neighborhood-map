@@ -20,7 +20,9 @@ class List extends Component {
                     <div className='place-list'>
                         <ol>
                             {this.props.getFilteredPlaces().map((place) => (
-                                <li key={place.id} className='place-list-item'>
+                                <li key={place.id}
+                                    className='place-list-item'
+                                    onClick={() => this.props.onItemClick(place.id)}>
                                     <div className='place-details'>
                                         <p>{place.name}</p>
                                     </div>
