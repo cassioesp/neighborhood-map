@@ -2,9 +2,12 @@ import React, {Component} from 'react';
 import './App.css';
 import Map from './Map'
 import List from './List'
+import escapeRegExp from "escape-string-regexp";
 
 class App extends Component {
+
     state = {
+        query: "",
         places: [
             {
                 "id": "589fae9ad9705c7b87640bb4",
@@ -44,18 +47,38 @@ class App extends Component {
             }],
     };
 
-    handleSetMarkers = (places) => {
-        this.setState({places});
-    };
+
+    /**
+     * Filter places list based on query.
+     * @param query
+     */
+    updateQuery(query) {
+        this.setState({
+            query: query
+        });
+    }
+
+    getFilteredPlaces() {
+        const {query, places} = this.state;
+
+        if (!query) {
+            return places;
+        }
+
+        const match = new RegExp(escapeRegExp(query), 'i');
+        return places.filter(p => match.test(p.name));
+    }
 
     render() {
         return (
             <div className="App">
                 <List
-                    setMarkers={this.handleSetMarkers}
-                    places={this.state.places}/>
+                    updateQuery={this.updateQuery.bind(this)}
+                    getFilteredPlaces={this.getFilteredPlaces.bind(this)}
+                    query={this.state.query}/>
                 <Map
-                    places={this.state.places}/>
+                    getFilteredPlaces={this.getFilteredPlaces.bind(this)}
+                />
             </div>
         );
     }
