@@ -45,6 +45,8 @@ class App extends Component {
                 "lat": -7.1194918,
                 "lng": -34.8701119
             }],
+        selectedPlace: null,
+        isOpen: false
     };
 
 
@@ -69,11 +71,25 @@ class App extends Component {
         return places.filter(p => match.test(p.name));
     }
 
-    onItemClick(id) {
 
-        console.log(id);
+    onToggleOpen(selectedPlace, isOpen) {
+        if (!isOpen) {
+            for (let i = 0; i < this.state.places.length; i++) {
+                if (this.state.places[i].id === selectedPlace) {
+                    this.setState({
+                        selectedPlace: this.state.places[i],
+                        isOpen: true
+                    })
+                }
+            }
+        } else {
+            this.setState({
+                selectedPlace: null,
+                isOpen: false
 
-    }
+            });
+        }
+    };
 
     render() {
         return (
@@ -81,16 +97,14 @@ class App extends Component {
                 <List
                     updateQuery={this.updateQuery.bind(this)}
                     getFilteredPlaces={this.getFilteredPlaces.bind(this)}
-                    onItemClick={this.onItemClick.bind(this)}
+                    onToggleOpen={this.onToggleOpen.bind(this)}
                     query={this.state.query}/>
                 <Map
-                    onMarkerClick={this.onItemClick.bind(this)}
+                    onToggleOpen={this.onToggleOpen.bind(this)}
                     getFilteredPlaces={this.getFilteredPlaces.bind(this)}
+                    selectedPlace={this.state.selectedPlace}
+                    isOpen={this.state.isOpen}
                 />
-                <InfoWindow
-                    place={this.state.selectedPlace}
-                    foursquare={FOURSQUARE}
-                    hideInfoWindow={this.handleHidingInfoWindow} />
             </div>
         );
     }

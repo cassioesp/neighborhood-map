@@ -22,7 +22,7 @@ class List extends Component {
                             {this.props.getFilteredPlaces().map((place) => (
                                 <li key={place.id}
                                     className='place-list-item'
-                                    onClick={() => this.props.onItemClick(place.id)}>
+                                    onClick={() => this.props.onToggleOpen(place.id)}>
                                     <div className='place-details'>
                                         <p>{place.name}</p>
                                     </div>

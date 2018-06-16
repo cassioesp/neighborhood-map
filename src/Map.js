@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import React, {Component} from 'react'
-import {GoogleMap, withGoogleMap, withScriptjs, Marker} from 'react-google-maps'
+import {GoogleMap, withGoogleMap, withScriptjs, Marker, InfoWindow} from 'react-google-maps'
 
 const MapComponent = withScriptjs(withGoogleMap(props => {
         return <GoogleMap
@@ -11,8 +11,20 @@ const MapComponent = withScriptjs(withGoogleMap(props => {
                     key={index}
                     id={place.id}
                     position={{lat: place.lat, lng: place.lng}}
-                    onClick={() => props.onMarkerClick(place.id)}
-                />)
+                    onClick={() => props.onToggleOpen(place.id)}
+                >
+                    {props.isOpen && (props.selectedPlace.id === place.id) && (
+                        <InfoWindow
+                            key={index}
+                            id={place.id}>
+                            <div>
+                                <h1>
+                                    {place.name}
+                                </h1>
+                            </div>
+                        </InfoWindow>
+                    )}
+                </Marker>)
             }
         </GoogleMap>
     }
@@ -31,8 +43,10 @@ class Map extends Component {
                 loadingElement={<div style={{height: `100%`}}/>}
                 containerElement={<div style={{height: `768px`}}/>}
                 mapElement={<div style={{height: `100%`}}/>}
-                onMarkerClick={(id) => this.props.onMarkerClick(id)}
+                onToggleOpen={(id) => this.props.onToggleOpen(id)}
                 getFilteredPlaces={this.props.getFilteredPlaces()}
+                isOpen={this.props.isOpen}
+                selectedPlace={this.props.selectedPlace}
             />
         </div>;
     }
