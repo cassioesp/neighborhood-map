@@ -13,14 +13,19 @@ const MapComponent = withScriptjs(withGoogleMap(props => {
                     position={{lat: place.lat, lng: place.lng}}
                     onClick={() => props.onToggleOpen(place.id)}
                 >
-                    {props.isOpen && (props.selectedPlace.id === place.id) && (
+                    {props.isOpen && props.info.categories
+                    && (props.selectedPlace.id === place.id) && (
                         <InfoWindow
                             key={index}
                             id={place.id}>
-                            <div>
+                            <div className={'info'}>
                                 <h1>
                                     {place.name}
                                 </h1>
+                                <h3>
+                                    {props.info.categories[0].name}
+                                </h3>
+                                <h4>Data from foursquare</h4>
                             </div>
                         </InfoWindow>
                     )}
@@ -41,12 +46,13 @@ class Map extends Component {
             <MapComponent
                 googleMapURL='https://maps.googleapis.com/maps/api/js?key=AIzaSyAi-athQZA-MeHI9ST6Br16Esxta8_z49g&v=3.exp&libraries=geometry,drawing,places'
                 loadingElement={<div style={{height: `100%`}}/>}
-                containerElement={<div style={{height: `768px`}}/>}
+                containerElement={<div style={{width: '100%', height: '100%'}}/>}
                 mapElement={<div style={{height: `100%`}}/>}
                 onToggleOpen={(id) => this.props.onToggleOpen(id)}
                 getFilteredPlaces={this.props.getFilteredPlaces()}
                 isOpen={this.props.isOpen}
                 selectedPlace={this.props.selectedPlace}
+                info={this.props.info}
             />
         </div>;
     }

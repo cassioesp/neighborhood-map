@@ -49,6 +49,10 @@ body,
     width: 32px;
 }
 
+.info {
+    text-align: center;
+}
+
 .map-container,
 .sandwich {
     transition: 0.3s ease all;

@@ -4,6 +4,11 @@ import Map from './Map'
 import List from './List'
 import escapeRegExp from "escape-string-regexp";
 
+var foursquare = require('react-foursquare')({
+    clientID: 'GE33NIJ2DMXDSLDYCJZ2DYQWAUJG3G3NCDAFXKNSCIMLCI1I',
+    clientSecret: 'SMRBE3PZ2Y4TQPUS44M24VYSQ2RZY24FJSYGISZYUVTV0MHP'
+});
+
 class App extends Component {
 
     state = {
@@ -46,7 +51,8 @@ class App extends Component {
                 "lng": -34.8701119
             }],
         selectedPlace: null,
-        isOpen: false
+        isOpen: false,
+        info: []
     };
 
 
@@ -79,7 +85,17 @@ class App extends Component {
                     this.setState({
                         selectedPlace: this.state.places[i],
                         isOpen: true
-                    })
+                    });
+
+                    var params = {};
+
+                    params.venue_id = this.state.places[i].id;
+                    params.query = this.state.places[i].name;
+                    params.ll = this.state.places[i].lat + ", " + this.state.places[i].lng;
+                    foursquare.venues.getVenues(params)
+                        .then(res => {
+                            this.setState({info: res.response.venues[0]});
+                        });
                 }
             }
         } else {
@@ -93,7 +109,7 @@ class App extends Component {
 
     render() {
         return (
-            <div className="App">
+            <div className="App" style={{width: '100%', height: '100%'}}>
                 <List
                     updateQuery={this.updateQuery.bind(this)}
                     getFilteredPlaces={this.getFilteredPlaces.bind(this)}
@@ -104,6 +120,7 @@ class App extends Component {
                     getFilteredPlaces={this.getFilteredPlaces.bind(this)}
                     selectedPlace={this.state.selectedPlace}
                     isOpen={this.state.isOpen}
+                    info={this.state.info}
                 />
             </div>
         );
