@@ -30,6 +30,15 @@ class List extends Component {
                             ))}
                         </ol>
                     </div>
+                    <div
+                        tabIndex='-1'
+                        style={{left: '250px'}}
+                        className='sandwich'
+                        onClick={this.props.onMenuClick}>
+                        <img
+                            src='menu.png'
+                            alt='Show/Hide List'/>
+                    </div>
                 </div>
             </div>
         );

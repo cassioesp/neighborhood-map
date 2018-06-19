@@ -107,6 +107,14 @@ class App extends Component {
         }
     };
 
+    onMenuClick() {
+        const map = document.querySelector('.map-container');
+        map.style.marginLeft = map.style.marginLeft === '250px' ? '0' : '250px';
+
+        const sandwich = document.querySelector('.sandwich');
+        sandwich.style.left = sandwich.style.left === '250px' ? '0' : '250px';
+    }
+
     render() {
         return (
             <div className="App" style={{width: '100%', height: '100%'}}>
@@ -114,6 +122,7 @@ class App extends Component {
                     updateQuery={this.updateQuery.bind(this)}
                     getFilteredPlaces={this.getFilteredPlaces.bind(this)}
                     onToggleOpen={this.onToggleOpen.bind(this)}
+                    onMenuClick={this.onMenuClick.bind(this)}
                     query={this.state.query}/>
                 <Map
                     onToggleOpen={this.onToggleOpen.bind(this)}

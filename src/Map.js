@@ -23,9 +23,10 @@ const MapComponent = withScriptjs(withGoogleMap(props => {
                                     {place.name}
                                 </h1>
                                 <h3>
+                                    {console.log(props.info.categories[0])}
                                     {props.info.categories[0].name}
                                 </h3>
-                                <h4>Data from foursquare</h4>
+                                <h5>Foursquare data</h5>
                             </div>
                         </InfoWindow>
                     )}
