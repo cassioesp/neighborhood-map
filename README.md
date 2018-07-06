@@ -17,4 +17,4 @@
 - material-ui
 
 ## Screenshot
-<img src="https://i.imgur.com/ysYjB02.png" width="250" />
+<img src="https://i.imgur.com/ysYjB02.png" width="720" />
